@@ -19,30 +19,32 @@
             margin: auto;
             background: #3b0047;
             min-height: 100vh;
-            padding-bottom: 80px;
+            padding-bottom: 120px;
         }
 
         .header {
-            background: linear-gradient(135deg, #5a0070, #2b0033);
-            padding: 20px;
+            padding: 0;
             text-align: center;
+            position: relative;
         }
 
-        .header h1 {
-            margin: 0;
-            color: #ffc400;
-            font-size: 32px;
-        }
-
-        .header p {
-            margin: 5px 0 0;
-            font-size: 14px;
-        }
-
-        .banner {
+        .header img {
             width: 100%;
-            height: 180px;
-            background: linear-gradient(135deg, #5a0070, #ffc400);
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .header-title {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            background: rgba(0,0,0,0.5);
+            padding: 10px;
+            color: #ffc400;
+            font-size: 26px;
+            font-weight: bold;
         }
 
         .section {
@@ -89,7 +91,7 @@
             align-items: center;
             padding: 10px 0;
             border-bottom: 1px solid #eee;
-            font-size: 16px;
+            font-size: 15px;
         }
 
         .item:last-child {
@@ -99,28 +101,87 @@
         .price {
             font-weight: bold;
             color: #2b0033;
+            margin: 0 8px;
         }
 
-        .btn-order {
+        .btn-add {
             background: #2b0033;
             color: #fff;
-            padding: 8px 12px;
+            padding: 6px 10px;
             border-radius: 6px;
-            text-decoration: none;
-            font-size: 14px;
+            font-size: 13px;
+            cursor: pointer;
+            border: none;
         }
 
-        .whatsapp-btn {
+        /* CARRINHO */
+        .cart-button {
             position: fixed;
             bottom: 20px;
             right: 20px;
+            background: #ffc400;
+            color: #3b0047;
+            padding: 14px 18px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .cart-box {
+            position: fixed;
+            bottom: 90px;
+            right: 10px;
+            left: 10px;
+            max-width: 460px;
+            margin: auto;
+            background: #fff;
+            color: #3b0047;
+            border-radius: 12px;
+            padding: 15px;
+            display: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .remove-btn {
+            background: red;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 8px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .total {
+            font-weight: bold;
+            margin-top: 10px;
+            text-align: right;
+        }
+
+        .btn-finish {
             background: #25D366;
             color: #fff;
-            padding: 15px 18px;
-            border-radius: 50px;
-            text-decoration: none;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
             font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            margin-top: 10px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -128,73 +189,130 @@
 
 <div class="container">
 
+    <!-- TOPO COM IMAGEM -->
     <div class="header">
-        <h1>Açaí no Copo</h1>
-        <p>Delivery e Retirada • Rabikas Burguer</p>
+        <img src="https://images.unsplash.com/photo-1597072689227-8882273e8f9b" alt="Açaí">
+        <div class="header-title">Açaí no Copo • Rabikas Burguer</div>
     </div>
-
-    <div class="banner"></div>
 
     <div class="section">
 
-        <!-- BOTÃO TAMANHOS -->
+        <!-- TAMANHOS -->
         <div class="menu-button" onclick="toggleBox('sizesBox')">
-            🍧 Ver Tamanhos de Açaí
+            🍧 Tamanhos de Açaí
         </div>
 
         <div class="content-box" id="sizesBox">
             <div class="item">
                 <span>300ml</span>
                 <span class="price">R$ 12,00</span>
-                <a class="btn-order" href="https://wa.me/5599991789706?text=Quero%20Açaí%20300ml">Pedir</a>
+                <button class="btn-add" onclick="addToCart('Açaí 300ml', 12)">Adicionar</button>
             </div>
-
             <div class="item">
                 <span>400ml</span>
                 <span class="price">R$ 15,00</span>
-                <a class="btn-order" href="https://wa.me/5599991789706?text=Quero%20Açaí%20400ml">Pedir</a>
+                <button class="btn-add" onclick="addToCart('Açaí 400ml', 15)">Adicionar</button>
             </div>
-
             <div class="item">
                 <span>500ml</span>
                 <span class="price">R$ 18,00</span>
-                <a class="btn-order" href="https://wa.me/5599991789706?text=Quero%20Açaí%20500ml">Pedir</a>
+                <button class="btn-add" onclick="addToCart('Açaí 500ml', 18)">Adicionar</button>
             </div>
         </div>
 
-        <!-- BOTÃO ACOMPANHAMENTOS -->
+        <!-- ACOMPANHAMENTOS -->
         <div class="menu-button" onclick="toggleBox('extrasBox')">
-            🍫 Ver Acompanhamentos
+            🍫 Acompanhamentos
         </div>
 
         <div class="content-box" id="extrasBox">
-            <div class="item"><span>Paçoca</span><span class="price">R$ 2,00</span></div>
-            <div class="item"><span>Leite em pó</span><span class="price">R$ 4,00</span></div>
-            <div class="item"><span>Granola</span><span class="price">R$ 4,00</span></div>
-            <div class="item"><span>Morango</span><span class="price">R$ 4,00</span></div>
-            <div class="item"><span>M&M</span><span class="price">R$ 3,00</span></div>
-            <div class="item"><span>Ouro Branco</span><span class="price">R$ 3,00</span></div>
-            <div class="item"><span>Banana</span><span class="price">R$ 2,00</span></div>
-            <div class="item"><span>Sonho / Valsa</span><span class="price">R$ 3,00</span></div>
-            <div class="item"><span>Leite Condensado</span><span class="price">R$ 3,00</span></div>
-            <div class="item"><span>Nutella</span><span class="price">R$ 4,00</span></div>
+            <div class="item"><span>Paçoca</span><span class="price">R$ 2,00</span><button class="btn-add" onclick="addToCart('Paçoca', 2)">Adicionar</button></div>
+            <div class="item"><span>Leite em pó</span><span class="price">R$ 4,00</span><button class="btn-add" onclick="addToCart('Leite em pó', 4)">Adicionar</button></div>
+            <div class="item"><span>Granola</span><span class="price">R$ 4,00</span><button class="btn-add" onclick="addToCart('Granola', 4)">Adicionar</button></div>
+            <div class="item"><span>Morango</span><span class="price">R$ 4,00</span><button class="btn-add" onclick="addToCart('Morango', 4)">Adicionar</button></div>
+            <div class="item"><span>M&M</span><span class="price">R$ 3,00</span><button class="btn-add" onclick="addToCart('M&M', 3)">Adicionar</button></div>
+            <div class="item"><span>Ouro Branco</span><span class="price">R$ 3,00</span><button class="btn-add" onclick="addToCart('Ouro Branco', 3)">Adicionar</button></div>
+            <div class="item"><span>Banana</span><span class="price">R$ 2,00</span><button class="btn-add" onclick="addToCart('Banana', 2)">Adicionar</button></div>
+            <div class="item"><span>Sonho de Valsa</span><span class="price">R$ 3,00</span><button class="btn-add" onclick="addToCart('Sonho de Valsa', 3)">Adicionar</button></div>
+            <div class="item"><span>Leite Condensado</span><span class="price">R$ 3,00</span><button class="btn-add" onclick="addToCart('Leite Condensado', 3)">Adicionar</button></div>
+            <div class="item"><span>Nutella</span><span class="price">R$ 4,00</span><button class="btn-add" onclick="addToCart('Nutella', 4)">Adicionar</button></div>
         </div>
 
     </div>
 
 </div>
 
-<a class="whatsapp-btn" href="https://wa.me/5599991789706">WhatsApp</a>
+<!-- BOTÃO CARRINHO -->
+<div class="cart-button" onclick="toggleCart()">🛒 Carrinho</div>
+
+<!-- CARRINHO -->
+<div class="cart-box" id="cartBox">
+    <div id="cartItems"></div>
+    <div class="total" id="totalValue">Total: R$ 0,00</div>
+    <div class="btn-finish" onclick="finishOrder()">Finalizar no WhatsApp</div>
+</div>
 
 <script>
+    let cart = [];
+
     function toggleBox(id) {
         const box = document.getElementById(id);
+        box.style.display = box.style.display === "block" ? "none" : "block";
+    }
 
-        if (box.style.display === "block") {
-            box.style.display = "none";
-        } else {
-            box.style.display = "block";
+    function addToCart(name, price) {
+        cart.push({ name, price });
+        updateCart();
+    }
+
+    function removeFromCart(index) {
+        cart.splice(index, 1);
+        updateCart();
+    }
+
+    function updateCart() {
+        const cartItemsDiv = document.getElementById("cartItems");
+        cartItemsDiv.innerHTML = "";
+
+        let total = 0;
+
+        cart.forEach((item, index) => {
+            total += item.price;
+
+            cartItemsDiv.innerHTML += `
+                <div class="cart-item">
+                    <span>${item.name}</span>
+                    <span>R$ ${item.price.toFixed(2)}</span>
+                    <button class="remove-btn" onclick="removeFromCart(${index})">X</button>
+                </div>
+            `;
+        });
+
+        document.getElementById("totalValue").innerText = "Total: R$ " + total.toFixed(2).replace('.', ',');
+    }
+
+    function toggleCart() {
+        const cartBox = document.getElementById("cartBox");
+        cartBox.style.display = cartBox.style.display === "block" ? "none" : "block";
+    }
+
+    function finishOrder() {
+        if (cart.length === 0) {
+            alert("Seu carrinho está vazio!");
+            return;
         }
+
+        let message = "Olá, gostaria de pedir:%0A";
+        let total = 0;
+
+        cart.forEach(item => {
+            message += "- " + item.name + " (R$ " + item.price.toFixed(2) + ")%0A";
+            total += item.price;
+        });
+
+        message += "%0ATotal: R$ " + total.toFixed(2);
+
+        window.open("https://wa.me/5599991789706?text=" + message, "_blank");
     }
 </script>
 
