@@ -2,10 +2,12 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Conveniência do Açaí</title>
+<title>Rabikas Burguer • Açaí</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap');
+
 body {
     margin: 0;
     padding: 0;
@@ -18,36 +20,53 @@ body {
 .splash {
     position: fixed;
     inset: 0;
-    background: linear-gradient(180deg, #3b0047, #1b001f);
+    background: radial-gradient(circle at top, #4b005c, #1b001f);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     z-index: 100;
     text-align: center;
+    padding: 20px;
 }
-.splash h1 {
-    font-size: 36px;
-    margin: 0;
+
+.brand-3d {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 38px;
+    font-weight: 900;
+    letter-spacing: 2px;
     color: #ffd34d;
+    text-transform: uppercase;
+    text-shadow:
+        1px 1px 0 #c98c00,
+        2px 2px 0 #b37a00,
+        3px 3px 0 #9c6800,
+        4px 4px 0 #855600,
+        5px 5px 12px rgba(0,0,0,0.6);
+    margin-bottom: 10px;
 }
-.splash p {
-    margin: 10px 0 30px;
-    font-size: 16px;
+
+.brand-sub {
+    font-size: 14px;
     opacity: 0.9;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
 }
+
 .splash button {
     background: linear-gradient(135deg, #ffcc00, #ff9900);
     color: #3b0047;
-    padding: 14px 30px;
+    padding: 15px 36px;
     border: none;
-    border-radius: 40px;
+    border-radius: 50px;
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
     box-shadow: 0 6px 0 #c97c00;
 }
-.splash button:active { transform: scale(0.95); }
+.splash button:active {
+    transform: scale(0.95);
+}
 
 /* APP */
 .container {
@@ -60,15 +79,23 @@ body {
     text-align: center;
 }
 
-/* MARCA */
-.brand-title {
-    font-size: 30px;
+/* TOPO APP */
+.brand-app {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 32px;
     font-weight: 900;
+    letter-spacing: 1.5px;
     color: #ffd34d;
     text-transform: uppercase;
     margin-bottom: 5px;
+    text-shadow:
+        1px 1px 0 #c98c00,
+        2px 2px 0 #b37a00,
+        3px 3px 0 #9c6800,
+        4px 4px 10px rgba(0,0,0,0.5);
 }
-.brand-subtitle {
+
+.brand-app-sub {
     font-size: 14px;
     opacity: 0.9;
     margin-bottom: 20px;
@@ -209,16 +236,16 @@ body {
 
 <!-- SPLASH -->
 <div class="splash" id="splash">
-    <h1>🍧 Bem-vindo</h1>
-    <p>Faça seu pedido agora</p>
-    <button onclick="enterApp()">FAÇA SEU PEDIDO</button>
+    <div class="brand-3d">Rabikas Burguer</div>
+    <div class="brand-sub">Conveniência • Açaí • Delivery</div>
+    <button onclick="enterApp()">FAZER PEDIDO</button>
 </div>
 
 <!-- APP -->
 <div class="container" id="app">
 
-    <div class="brand-title">Conveniência do Açaí</div>
-    <div class="brand-subtitle">Monte seu açaí do seu jeito</div>
+    <div class="brand-app">Rabikas Burguer</div>
+    <div class="brand-app-sub">Monte seu açaí do seu jeito</div>
 
     <div class="section">
 
@@ -321,13 +348,12 @@ function finishOrder() {
     }
 
     let pagamento = prompt("Forma de pagamento? (Pix, Dinheiro, Cartão)");
-
     if (!pagamento || pagamento.trim() === "") {
         alert("Informe a forma de pagamento.");
         return;
     }
 
-    let msg = "🟣 *NOVO PEDIDO - CONVENIÊNCIA DO AÇAÍ*%0A";
+    let msg = "🟣 *NOVO PEDIDO - RABIKAS BURGUER*%0A";
     msg += "Cliente: " + nome + "%0A";
 
     if (telefone && telefone.trim() !== "") {
