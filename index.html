@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Açaí no Copo</title>
+    <title>Açaí no Copo • Rabikas Burguer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
@@ -19,32 +19,36 @@
             margin: auto;
             background: #3b0047;
             min-height: 100vh;
-            padding-bottom: 120px;
+            padding-bottom: 140px;
         }
 
-        .header {
-            padding: 0;
-            text-align: center;
+        /* TOPO COM IMAGEM */
+        .header-bg {
+            width: 100%;
+            height: 230px;
+            background: url('acai-capa.png') center/cover no-repeat;
             position: relative;
         }
 
-        .header img {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
+        .header-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6));
         }
 
         .header-title {
             position: absolute;
-            bottom: 10px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            background: rgba(0,0,0,0.5);
+            bottom: 15px;
+            left: 15px;
+            right: 15px;
+            background: rgba(0,0,0,0.55);
             padding: 10px;
+            border-radius: 10px;
             color: #ffc400;
-            font-size: 26px;
+            font-size: 22px;
             font-weight: bold;
+            text-align: center;
+            backdrop-filter: blur(4px);
         }
 
         .section {
@@ -55,33 +59,33 @@
             background: #ffc400;
             color: #3b0047;
             padding: 15px;
-            border-radius: 12px;
+            border-radius: 14px;
             text-align: center;
             font-weight: bold;
             font-size: 18px;
             margin-bottom: 15px;
             cursor: pointer;
-            transition: transform 0.1s, box-shadow 0.1s;
+            transition: all 0.15s ease;
             box-shadow: 0 4px 0 #c9a000;
         }
 
         .menu-button:active {
-            transform: translateY(3px);
-            box-shadow: 0 1px 0 #c9a000;
+            transform: scale(0.97);
+            box-shadow: 0 2px 0 #c9a000;
         }
 
         .content-box {
             background: #fff;
             color: #3b0047;
-            border-radius: 12px;
+            border-radius: 14px;
             padding: 15px;
             margin-bottom: 20px;
             display: none;
-            animation: fadeIn 0.4s ease;
+            animation: fadeIn 0.3s ease;
         }
 
         @keyframes fadeIn {
-            from {opacity: 0; transform: translateY(-10px);}
+            from {opacity: 0; transform: translateY(-8px);}
             to {opacity: 1; transform: translateY(0);}
         }
 
@@ -107,11 +111,16 @@
         .btn-add {
             background: #2b0033;
             color: #fff;
-            padding: 6px 10px;
-            border-radius: 6px;
+            padding: 7px 10px;
+            border-radius: 8px;
             font-size: 13px;
             cursor: pointer;
             border: none;
+            transition: transform 0.1s;
+        }
+
+        .btn-add:active {
+            transform: scale(0.92);
         }
 
         /* CARRINHO */
@@ -126,6 +135,7 @@
             font-weight: bold;
             cursor: pointer;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 10;
         }
 
         .cart-box {
@@ -137,11 +147,12 @@
             margin: auto;
             background: #fff;
             color: #3b0047;
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 15px;
             display: none;
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
             animation: fadeIn 0.3s ease;
+            z-index: 10;
         }
 
         .cart-item {
@@ -158,10 +169,10 @@
         }
 
         .remove-btn {
-            background: red;
+            background: #e60000;
             color: #fff;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             padding: 4px 8px;
             cursor: pointer;
             font-size: 12px;
@@ -177,7 +188,7 @@
             background: #25D366;
             color: #fff;
             padding: 12px;
-            border-radius: 8px;
+            border-radius: 10px;
             text-align: center;
             font-weight: bold;
             margin-top: 10px;
@@ -189,57 +200,38 @@
 
 <div class="container">
 
-    <!-- TOPO COM IMAGEM -->
-    <div class="header">
-        <img src="https://images.unsplash.com/photo-1597072689227-8882273e8f9b" alt="Açaí">
+    <!-- TOPO -->
+    <div class="header-bg">
+        <div class="header-overlay"></div>
         <div class="header-title">Açaí no Copo • Rabikas Burguer</div>
     </div>
 
     <div class="section">
 
         <!-- TAMANHOS -->
-        <div class="menu-button" onclick="toggleBox('sizesBox')">
-            🍧 Tamanhos de Açaí
-        </div>
-
+        <div class="menu-button" onclick="toggleBox('sizesBox')">🍧 Tamanhos de Açaí</div>
         <div class="content-box" id="sizesBox">
-            <div class="item">
-                <span>300ml</span>
-                <span class="price">R$ 12,00</span>
-                <button class="btn-add" onclick="addToCart('Açaí 300ml', 12)">Adicionar</button>
-            </div>
-            <div class="item">
-                <span>400ml</span>
-                <span class="price">R$ 15,00</span>
-                <button class="btn-add" onclick="addToCart('Açaí 400ml', 15)">Adicionar</button>
-            </div>
-            <div class="item">
-                <span>500ml</span>
-                <span class="price">R$ 18,00</span>
-                <button class="btn-add" onclick="addToCart('Açaí 500ml', 18)">Adicionar</button>
-            </div>
+            <div class="item"><span>300ml</span><span class="price">R$ 12,00</span><button class="btn-add" onclick="addToCart('Açaí 300ml',12)">Adicionar</button></div>
+            <div class="item"><span>400ml</span><span class="price">R$ 15,00</span><button class="btn-add" onclick="addToCart('Açaí 400ml',15)">Adicionar</button></div>
+            <div class="item"><span>500ml</span><span class="price">R$ 18,00</span><button class="btn-add" onclick="addToCart('Açaí 500ml',18)">Adicionar</button></div>
         </div>
 
         <!-- ACOMPANHAMENTOS -->
-        <div class="menu-button" onclick="toggleBox('extrasBox')">
-            🍫 Acompanhamentos
-        </div>
-
+        <div class="menu-button" onclick="toggleBox('extrasBox')">🍫 Acompanhamentos</div>
         <div class="content-box" id="extrasBox">
-            <div class="item"><span>Paçoca</span><span class="price">R$ 2,00</span><button class="btn-add" onclick="addToCart('Paçoca', 2)">Adicionar</button></div>
-            <div class="item"><span>Leite em pó</span><span class="price">R$ 4,00</span><button class="btn-add" onclick="addToCart('Leite em pó', 4)">Adicionar</button></div>
-            <div class="item"><span>Granola</span><span class="price">R$ 4,00</span><button class="btn-add" onclick="addToCart('Granola', 4)">Adicionar</button></div>
-            <div class="item"><span>Morango</span><span class="price">R$ 4,00</span><button class="btn-add" onclick="addToCart('Morango', 4)">Adicionar</button></div>
-            <div class="item"><span>M&M</span><span class="price">R$ 3,00</span><button class="btn-add" onclick="addToCart('M&M', 3)">Adicionar</button></div>
-            <div class="item"><span>Ouro Branco</span><span class="price">R$ 3,00</span><button class="btn-add" onclick="addToCart('Ouro Branco', 3)">Adicionar</button></div>
-            <div class="item"><span>Banana</span><span class="price">R$ 2,00</span><button class="btn-add" onclick="addToCart('Banana', 2)">Adicionar</button></div>
-            <div class="item"><span>Sonho de Valsa</span><span class="price">R$ 3,00</span><button class="btn-add" onclick="addToCart('Sonho de Valsa', 3)">Adicionar</button></div>
-            <div class="item"><span>Leite Condensado</span><span class="price">R$ 3,00</span><button class="btn-add" onclick="addToCart('Leite Condensado', 3)">Adicionar</button></div>
-            <div class="item"><span>Nutella</span><span class="price">R$ 4,00</span><button class="btn-add" onclick="addToCart('Nutella', 4)">Adicionar</button></div>
+            <div class="item"><span>Paçoca</span><span class="price">R$ 2,00</span><button class="btn-add" onclick="addToCart('Paçoca',2)">Adicionar</button></div>
+            <div class="item"><span>Leite em pó</span><span class="price">R$ 4,00</span><button class="btn-add" onclick="addToCart('Leite em pó',4)">Adicionar</button></div>
+            <div class="item"><span>Granola</span><span class="price">R$ 4,00</span><button class="btn-add" onclick="addToCart('Granola',4)">Adicionar</button></div>
+            <div class="item"><span>Morango</span><span class="price">R$ 4,00</span><button class="btn-add" onclick="addToCart('Morango',4)">Adicionar</button></div>
+            <div class="item"><span>M&M</span><span class="price">R$ 3,00</span><button class="btn-add" onclick="addToCart('M&M',3)">Adicionar</button></div>
+            <div class="item"><span>Ouro Branco</span><span class="price">R$ 3,00</span><button class="btn-add" onclick="addToCart('Ouro Branco',3)">Adicionar</button></div>
+            <div class="item"><span>Banana</span><span class="price">R$ 2,00</span><button class="btn-add" onclick="addToCart('Banana',2)">Adicionar</button></div>
+            <div class="item"><span>Sonho de Valsa</span><span class="price">R$ 3,00</span><button class="btn-add" onclick="addToCart('Sonho de Valsa',3)">Adicionar</button></div>
+            <div class="item"><span>Leite Condensado</span><span class="price">R$ 3,00</span><button class="btn-add" onclick="addToCart('Leite Condensado',3)">Adicionar</button></div>
+            <div class="item"><span>Nutella</span><span class="price">R$ 4,00</span><button class="btn-add" onclick="addToCart('Nutella',4)">Adicionar</button></div>
         </div>
 
     </div>
-
 </div>
 
 <!-- BOTÃO CARRINHO -->
@@ -273,16 +265,14 @@
     function updateCart() {
         const cartItemsDiv = document.getElementById("cartItems");
         cartItemsDiv.innerHTML = "";
-
         let total = 0;
 
         cart.forEach((item, index) => {
             total += item.price;
-
             cartItemsDiv.innerHTML += `
                 <div class="cart-item">
                     <span>${item.name}</span>
-                    <span>R$ ${item.price.toFixed(2)}</span>
+                    <span>R$ ${item.price.toFixed(2).replace('.', ',')}</span>
                     <button class="remove-btn" onclick="removeFromCart(${index})">X</button>
                 </div>
             `;
@@ -306,11 +296,11 @@
         let total = 0;
 
         cart.forEach(item => {
-            message += "- " + item.name + " (R$ " + item.price.toFixed(2) + ")%0A";
+            message += "- " + item.name + " (R$ " + item.price.toFixed(2).replace('.', ',') + ")%0A";
             total += item.price;
         });
 
-        message += "%0ATotal: R$ " + total.toFixed(2);
+        message += "%0ATotal: R$ " + total.toFixed(2).replace('.', ',');
 
         window.open("https://wa.me/5599991789706?text=" + message, "_blank");
     }
