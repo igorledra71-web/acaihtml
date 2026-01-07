@@ -12,7 +12,6 @@ body {
     background: #1b001f;
     font-family: Arial, Helvetica, sans-serif;
     color: #fff;
-    overflow-x: hidden;
 }
 
 /* SPLASH */
@@ -25,6 +24,7 @@ body {
     justify-content: center;
     align-items: center;
     z-index: 100;
+    text-align: center;
 }
 .splash h1 {
     font-size: 34px;
@@ -58,13 +58,13 @@ body {
     margin: auto;
     background: linear-gradient(180deg, #3b0047, #1b001f);
     min-height: 100vh;
-    padding-bottom: 160px;
+    padding: 20px 15px 160px;
     display: none;
+    text-align: center;
 }
 
 /* TOPO */
 .header-title {
-    margin: 20px 15px 10px;
     background: linear-gradient(135deg, #ffcc00, #ff9900);
     color: #3b0047;
     padding: 14px;
@@ -73,14 +73,31 @@ body {
     font-weight: bold;
     text-align: center;
     box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    margin-bottom: 15px;
+}
+
+/* BLOCO DESTAQUE */
+.highlight-box {
+    background: rgba(255,255,255,0.1);
+    border: 1px dashed #ffd34d;
+    border-radius: 16px;
+    padding: 15px;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+.highlight-box strong {
+    color: #ffd34d;
 }
 
 /* SEÇÕES */
 .section {
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .menu-button {
+    width: 100%;
     background: linear-gradient(135deg, #ffcc00, #ff9900);
     color: #3b0047;
     padding: 16px;
@@ -92,13 +109,13 @@ body {
     cursor: pointer;
     box-shadow: 0 6px 0 #c97c00;
 }
-
 .menu-button:active {
     transform: scale(0.96);
     box-shadow: 0 3px 0 #c97c00;
 }
 
 .content-box {
+    width: 100%;
     background: #fff;
     color: #3b0047;
     border-radius: 18px;
@@ -115,11 +132,9 @@ body {
     border-bottom: 1px dashed #ddd;
     font-size: 15px;
 }
-.item:last-child {
-    border-bottom: none;
-}
+.item:last-child { border-bottom: none; }
 
-.item-name { flex: 1; }
+.item-name { flex: 1; text-align: left; }
 .item-price { width: 70px; text-align: right; font-weight: bold; }
 
 .btn-add {
@@ -131,6 +146,21 @@ body {
     font-size: 13px;
     cursor: pointer;
     border: none;
+}
+
+/* OBSERVAÇÃO */
+.obs-box {
+    width: 100%;
+    margin-bottom: 25px;
+}
+.obs-box textarea {
+    width: 100%;
+    height: 80px;
+    border-radius: 12px;
+    border: none;
+    padding: 10px;
+    font-size: 14px;
+    resize: none;
 }
 
 /* CARRINHO */
@@ -174,7 +204,7 @@ body {
 }
 .cart-item:last-child { border-bottom: none; }
 
-.cart-name { flex: 1; }
+.cart-name { flex: 1; text-align: left; }
 .cart-price { width: 70px; text-align: right; font-weight: bold; }
 
 .remove-btn {
@@ -222,6 +252,11 @@ body {
 
     <div class="header-title">Conveniência do Açaí</div>
 
+    <div class="highlight-box">
+        <strong>Monte seu Açaí do seu jeito!</strong><br>
+        Escolha o tamanho, adicione acompanhamentos e finalize direto no WhatsApp 🚀
+    </div>
+
     <div class="section">
 
         <!-- TAMANHOS -->
@@ -241,6 +276,11 @@ body {
             <div class="item"><span class="item-name">Morango</span><span class="item-price">R$ 4,00</span><button class="btn-add" onclick="addToCart('Morango',4)">Adicionar</button></div>
             <div class="item"><span class="item-name">Banana</span><span class="item-price">R$ 2,00</span><button class="btn-add" onclick="addToCart('Banana',2)">Adicionar</button></div>
             <div class="item"><span class="item-name">Nutella</span><span class="item-price">R$ 4,00</span><button class="btn-add" onclick="addToCart('Nutella',4)">Adicionar</button></div>
+        </div>
+
+        <!-- OBSERVAÇÃO -->
+        <div class="obs-box">
+            <textarea id="obs" placeholder="Observações do pedido (ex: sem banana, pouco leite, bem gelado...)"></textarea>
         </div>
 
     </div>
@@ -324,6 +364,11 @@ function finishOrder() {
         message += "- " + item.name + " (R$ " + item.price.toFixed(2).replace('.', ',') + ")%0A";
         total += item.price;
     });
+
+    const obs = document.getElementById("obs").value;
+    if (obs.trim() !== "") {
+        message += "%0AObservações: " + obs;
+    }
 
     message += "%0ATotal: R$ " + total.toFixed(2).replace('.', ',');
 
