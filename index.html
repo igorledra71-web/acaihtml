@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Rabikas Burguer • Premium Menu</title>
+<title>Rabikas Burguer • Cardápio Premium</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -22,12 +22,6 @@ body{
     background:radial-gradient(circle at top,#5a0070,#1b001f);
     display:flex; flex-direction:column; justify-content:center; align-items:center;
     text-align:center; z-index:100; padding:20px;
-    animation:fadeIn .6s ease;
-}
-
-@keyframes fadeIn{
-    from{opacity:0; transform:scale(.95);}
-    to{opacity:1; transform:scale(1);}
 }
 
 .brand-3d{
@@ -45,12 +39,6 @@ body{
     margin-bottom:12px;
 }
 
-.splash span{
-    font-size:14px;
-    opacity:.9;
-    margin-bottom:20px;
-}
-
 .splash button{
     background:linear-gradient(135deg,#ffcc00,#ff9900);
     color:#3b0047;
@@ -61,9 +49,7 @@ body{
     font-weight:bold;
     cursor:pointer;
     box-shadow:0 8px 0 #c97c00;
-    transition:.2s;
 }
-.splash button:active{transform:translateY(4px); box-shadow:0 4px 0 #c97c00;}
 
 /* APP */
 .container{
@@ -71,16 +57,12 @@ body{
     max-width:430px;
     margin:0 auto;
     min-height:100vh;
-    padding:20px 12px 120px;
+    padding:20px 12px 140px;
     text-align:center;
     display:none;
 }
 
 /* HEADER */
-.header{
-    margin-bottom:20px;
-}
-
 .brand-app{
     font-family:'Montserrat',sans-serif;
     font-size:32px;
@@ -93,12 +75,9 @@ body{
         3px 3px 10px rgba(0,0,0,.5);
 }
 
-.brand-sub{
-    font-size:13px;
-    opacity:.85;
-}
+.brand-sub{font-size:13px; opacity:.85; margin-bottom:20px;}
 
-/* CATEGORIES */
+/* CATEGORY BUTTON */
 .category-btn{
     width:100%;
     background:linear-gradient(135deg,#ffcc00,#ff9900);
@@ -113,37 +92,37 @@ body{
     display:flex;
     align-items:center;
     justify-content:space-between;
-    transition:.2s;
 }
 
-.category-btn span{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-.category-btn:active{
-    transform:translateY(4px);
-    box-shadow:0 4px 0 #c97c00;
+/* SUB BUTTON (AÇAÍ) */
+.sub-btn{
+    width:100%;
+    background:linear-gradient(135deg,#ffd34d,#ffb800);
+    color:#3b0047;
+    padding:14px;
+    border-radius:16px;
+    font-size:15px;
+    font-weight:bold;
+    margin-bottom:10px;
+    cursor:pointer;
+    box-shadow:0 6px 0 #c97c00;
 }
 
 /* CONTENT */
 .content-box{
     width:100%;
-    background:rgba(255,255,255,0.95);
+    background:#fff;
     color:#3b0047;
     border-radius:20px;
     padding:15px;
     margin-bottom:20px;
-    max-height:0;
-    overflow:hidden;
-    transition:max-height .4s ease, padding .3s ease;
+    display:none;
+    animation:fade .3s ease;
 }
 
-/* ACTIVE */
-.content-box.active{
-    max-height:2000px;
-    padding:15px;
+@keyframes fade{
+    from{opacity:0; transform:translateY(-5px);}
+    to{opacity:1; transform:translateY(0);}
 }
 
 /* ITEMS */
@@ -169,19 +148,6 @@ body{
     cursor:pointer;
     font-size:12px;
     white-space:nowrap;
-    transition:.2s;
-}
-.btn-add:active{transform:scale(.95);}
-
-/* OBS */
-.obs-box textarea{
-    width:100%;
-    height:80px;
-    border-radius:14px;
-    border:none;
-    padding:10px;
-    margin:10px 0 20px;
-    font-size:14px;
 }
 
 /* CART */
@@ -199,12 +165,6 @@ body{
     border-radius:22px 22px 0 0;
     box-shadow:0 -6px 20px rgba(0,0,0,.4);
     display:none;
-    animation:slideUp .3s ease;
-}
-
-@keyframes slideUp{
-    from{transform:translate(-50%,100%);}
-    to{transform:translate(-50%,0);}
 }
 
 .cart-item{
@@ -251,42 +211,43 @@ body{
 <!-- SPLASH -->
 <div class="splash" id="splash">
     <div class="brand-3d">Rabikas Burguer</div>
-    <span>Hamburgueria • Açaí • Pastéis • Porções</span>
     <button onclick="enterApp()">FAZER PEDIDO</button>
 </div>
 
 <!-- APP -->
 <div class="container" id="app">
 
-    <div class="header">
-        <div class="brand-app">Rabikas Burguer</div>
-        <div class="brand-sub">Cardápio Premium</div>
-    </div>
+    <div class="brand-app">Rabikas Burguer</div>
+    <div class="brand-sub">Cardápio Digital</div>
 
     <!-- AÇAÍ -->
-    <div class="category-btn" onclick="toggleBox('acaiBox')">
-        <span>🍧 Açaí</span> <span>▼</span>
-    </div>
-    <div class="content-box" id="acaiBox">
-        <div class="item"><span class="item-name">Açaí 300ml</span><span class="item-price">R$12,00</span><button class="btn-add" onclick="addToCart('Açaí 300ml',12)">Adicionar</button></div>
-        <div class="item"><span class="item-name">Açaí 400ml</span><span class="item-price">R$15,00</span><button class="btn-add" onclick="addToCart('Açaí 400ml',15)">Adicionar</button></div>
-        <div class="item"><span class="item-name">Açaí 500ml</span><span class="item-price">R$18,00</span><button class="btn-add" onclick="addToCart('Açaí 500ml',18)">Adicionar</button></div>
-        <div class="item"><span class="item-name">Paçoca</span><span class="item-price">R$2,00</span><button class="btn-add" onclick="addToCart('Paçoca',2)">Adicionar</button></div>
-        <div class="item"><span class="item-name">Leite em pó</span><span class="item-price">R$4,00</span><button class="btn-add" onclick="addToCart('Leite em pó',4)">Adicionar</button></div>
-        <div class="item"><span class="item-name">Granola</span><span class="item-price">R$4,00</span><button class="btn-add" onclick="addToCart('Granola',4)">Adicionar</button></div>
-        <div class="item"><span class="item-name">Morango</span><span class="item-price">R$4,00</span><button class="btn-add" onclick="addToCart('Morango',4)">Adicionar</button></div>
-        <div class="item"><span class="item-name">M&M</span><span class="item-price">R$3,00</span><button class="btn-add" onclick="addToCart('M&M',3)">Adicionar</button></div>
-        <div class="item"><span class="item-name">Ouro Branco</span><span class="item-price">R$3,00</span><button class="btn-add" onclick="addToCart('Ouro Branco',3)">Adicionar</button></div>
-        <div class="item"><span class="item-name">Banana</span><span class="item-price">R$2,00</span><button class="btn-add" onclick="addToCart('Banana',2)">Adicionar</button></div>
-        <div class="item"><span class="item-name">Sonho/Valsa</span><span class="item-price">R$3,00</span><button class="btn-add" onclick="addToCart('Sonho/Valsa',3)">Adicionar</button></div>
-        <div class="item"><span class="item-name">Leite Condensado</span><span class="item-price">R$3,00</span><button class="btn-add" onclick="addToCart('Leite Condensado',3)">Adicionar</button></div>
-        <div class="item"><span class="item-name">Nutella</span><span class="item-price">R$4,00</span><button class="btn-add" onclick="addToCart('Nutella',4)">Adicionar</button></div>
+    <div class="category-btn" onclick="toggleBox('acaiArea')">🍧 Açaí <span>▼</span></div>
+    <div id="acaiArea" style="display:none;">
+
+        <div class="sub-btn" onclick="toggleBox('acaiTamanhos')">Tamanhos</div>
+        <div class="content-box" id="acaiTamanhos">
+            <div class="item"><span class="item-name">300ml</span><span class="item-price">R$12,00</span><button class="btn-add" onclick="addToCart('Açaí 300ml',12)">Adicionar</button></div>
+            <div class="item"><span class="item-name">400ml</span><span class="item-price">R$15,00</span><button class="btn-add" onclick="addToCart('Açaí 400ml',15)">Adicionar</button></div>
+            <div class="item"><span class="item-name">500ml</span><span class="item-price">R$18,00</span><button class="btn-add" onclick="addToCart('Açaí 500ml',18)">Adicionar</button></div>
+        </div>
+
+        <div class="sub-btn" onclick="toggleBox('acaiExtras')">Adicionais</div>
+        <div class="content-box" id="acaiExtras">
+            <div class="item"><span class="item-name">Paçoca</span><span class="item-price">R$2,00</span><button class="btn-add" onclick="addToCart('Paçoca',2)">Adicionar</button></div>
+            <div class="item"><span class="item-name">Leite em pó</span><span class="item-price">R$4,00</span><button class="btn-add" onclick="addToCart('Leite em pó',4)">Adicionar</button></div>
+            <div class="item"><span class="item-name">Granola</span><span class="item-price">R$4,00</span><button class="btn-add" onclick="addToCart('Granola',4)">Adicionar</button></div>
+            <div class="item"><span class="item-name">Morango</span><span class="item-price">R$4,00</span><button class="btn-add" onclick="addToCart('Morango',4)">Adicionar</button></div>
+            <div class="item"><span class="item-name">M&M</span><span class="item-price">R$3,00</span><button class="btn-add" onclick="addToCart('M&M',3)">Adicionar</button></div>
+            <div class="item"><span class="item-name">Ouro Branco</span><span class="item-price">R$3,00</span><button class="btn-add" onclick="addToCart('Ouro Branco',3)">Adicionar</button></div>
+            <div class="item"><span class="item-name">Banana</span><span class="item-price">R$2,00</span><button class="btn-add" onclick="addToCart('Banana',2)">Adicionar</button></div>
+            <div class="item"><span class="item-name">Sonho/Valsa</span><span class="item-price">R$3,00</span><button class="btn-add" onclick="addToCart('Sonho/Valsa',3)">Adicionar</button></div>
+            <div class="item"><span class="item-name">Leite Condensado</span><span class="item-price">R$3,00</span><button class="btn-add" onclick="addToCart('Leite Condensado',3)">Adicionar</button></div>
+            <div class="item"><span class="item-name">Nutella</span><span class="item-price">R$4,00</span><button class="btn-add" onclick="addToCart('Nutella',4)">Adicionar</button></div>
+        </div>
     </div>
 
     <!-- LANCHES -->
-    <div class="category-btn" onclick="toggleBox('lanchesBox')">
-        <span>🍔 Lanches</span> <span>▼</span>
-    </div>
+    <div class="category-btn" onclick="toggleBox('lanchesBox')">🍔 Lanches <span>▼</span></div>
     <div class="content-box" id="lanchesBox">
         <div class="item"><span class="item-name">X-Salada</span><span class="item-price">R$17,00</span><button class="btn-add" onclick="addToCart('X-Salada',17)">Adicionar</button></div>
         <div class="item"><span class="item-name">X-Burguer</span><span class="item-price">R$14,00</span><button class="btn-add" onclick="addToCart('X-Burguer',14)">Adicionar</button></div>
@@ -304,9 +265,7 @@ body{
     </div>
 
     <!-- PASTÉIS -->
-    <div class="category-btn" onclick="toggleBox('pasteisBox')">
-        <span>🥟 Pastéis</span> <span>▼</span>
-    </div>
+    <div class="category-btn" onclick="toggleBox('pasteisBox')">🥟 Pastéis <span>▼</span></div>
     <div class="content-box" id="pasteisBox">
         <div class="item"><span class="item-name">Pastel de Carne</span><span class="item-price">R$14,00</span><button class="btn-add" onclick="addToCart('Pastel de Carne',14)">Adicionar</button></div>
         <div class="item"><span class="item-name">Pastel de Frango</span><span class="item-price">R$12,00</span><button class="btn-add" onclick="addToCart('Pastel de Frango',12)">Adicionar</button></div>
@@ -324,9 +283,7 @@ body{
     </div>
 
     <!-- PORÇÕES -->
-    <div class="category-btn" onclick="toggleBox('porcoesBox')">
-        <span>🍟 Porções</span> <span>▼</span>
-    </div>
+    <div class="category-btn" onclick="toggleBox('porcoesBox')">🍟 Porções <span>▼</span></div>
     <div class="content-box" id="porcoesBox">
         <div class="item"><span class="item-name">Fritas c/ Frango</span><span class="item-price">R$39,99</span><button class="btn-add" onclick="addToCart('Fritas c/ Frango',39.99)">Adicionar</button></div>
         <div class="item"><span class="item-name">Fritas</span><span class="item-price">R$24,99</span><button class="btn-add" onclick="addToCart('Fritas',24.99)">Adicionar</button></div>
@@ -340,10 +297,6 @@ body{
         <div class="item"><span class="item-name">Fritas c/ Polenta</span><span class="item-price">R$24,99</span><button class="btn-add" onclick="addToCart('Fritas c/ Polenta',24.99)">Adicionar</button></div>
         <div class="item"><span class="item-name">Fritas c/ Calabresa e Catupiry</span><span class="item-price">R$35,99</span><button class="btn-add" onclick="addToCart('Fritas c/ Calabresa e Catupiry',35.99)">Adicionar</button></div>
         <div class="item"><span class="item-name">Fritas + Polenta + Chuleta + Anel de Cebola</span><span class="item-price">R$49,99</span><button class="btn-add" onclick="addToCart('Fritas + Polenta + Chuleta + Anel de Cebola',49.99)">Adicionar</button></div>
-    </div>
-
-    <div class="obs-box">
-        <textarea id="obs" placeholder="Observações do pedido"></textarea>
     </div>
 
 </div>
@@ -364,8 +317,8 @@ function enterApp(){
 }
 
 function toggleBox(id){
-    const box=document.getElementById(id);
-    box.classList.toggle('active');
+    let el=document.getElementById(id);
+    el.style.display = el.style.display === 'block' ? 'none' : 'block';
 }
 
 function addToCart(name,price){
@@ -379,7 +332,7 @@ function removeFromCart(i){
 }
 
 function updateCart(){
-    const box=document.getElementById('cartItems');
+    let box=document.getElementById('cartItems');
     box.innerHTML='';
     let total=0;
 
@@ -419,7 +372,6 @@ function finishOrder(){
         total += i.price;
     });
 
-    if(obs.value) msg += `\nObs: ${obs.value}\n`;
     msg += `\nTotal: R$ ${total.toFixed(2).replace('.',',')}`;
 
     window.open(`https://wa.me/554991789706?text=${encodeURIComponent(msg)}`, '_blank');
