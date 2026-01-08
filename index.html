@@ -15,7 +15,7 @@ body{
     color:#fff;
     display:flex;
     justify-content:center;
-    overflow-y:auto; /* ✅ LIBERA SCROLL */
+    overflow-y:auto;
     overflow-x:hidden;
 }
 
@@ -25,10 +25,19 @@ body{
     inset:0;
     background:linear-gradient(180deg,#120016,#2b0033);
     display:flex;
-    flex-direction:column;
     align-items:center;
     justify-content:center;
     z-index:9999;
+}
+.splash-content{
+    width:100%;
+    max-width:420px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:20px;
 }
 .splash-title{
     font-family:'Montserrat',sans-serif;
@@ -37,6 +46,7 @@ body{
     color:#ffd34d;
     text-shadow:2px 2px 0 #c98c00,4px 4px 0 #b37a00;
     animation:zoomIn 1.2s ease;
+    line-height:1.1;
 }
 .splash-btn{
     margin-top:30px;
@@ -184,8 +194,10 @@ body{
 
 <!-- SPLASH -->
 <div id="splashScreen">
-    <div class="splash-title">Rabikas Burguer</div>
-    <div class="splash-btn" onclick="enterApp()">FAZER PEDIDO</div>
+    <div class="splash-content">
+        <div class="splash-title">Rabikas Burguer</div>
+        <div class="splash-btn" onclick="enterApp()">FAZER PEDIDO</div>
+    </div>
 </div>
 
 <!-- APP -->
