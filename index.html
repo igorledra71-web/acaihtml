@@ -5,7 +5,7 @@
 <title>Rabikas Burguer • Cardápio Digital</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -46,7 +46,6 @@ body{
     color:#ffd34d;
     text-shadow:2px 2px 0 #c98c00,4px 4px 0 #b37a00;
     animation:zoomIn 1.2s ease;
-    line-height:1.1;
 }
 .splash-btn{
     margin-top:30px;
@@ -73,10 +72,7 @@ body{
     transform:scale(.96);
     transition:all .6s ease;
 }
-#appContainer.show{
-    opacity:1;
-    transform:scale(1);
-}
+#appContainer.show{opacity:1;transform:scale(1);}
 
 .brand-app{
     font-family:'Montserrat',sans-serif;
@@ -194,10 +190,10 @@ body{
 
 <!-- SPLASH -->
 <div id="splashScreen">
-    <div class="splash-content">
-        <div class="splash-title">Rabikas Burguer</div>
-        <div class="splash-btn" onclick="enterApp()">FAZER PEDIDO</div>
-    </div>
+  <div class="splash-content">
+    <div class="splash-title">Rabikas Burguer</div>
+    <div class="splash-btn" onclick="enterApp()">FAZER PEDIDO</div>
+  </div>
 </div>
 
 <!-- APP -->
@@ -297,6 +293,18 @@ body{
 <div class="item"><span>Fritas c/ Polenta</span><span>R$ 24,99</span><button class="btn-add" onclick="addToCart('Fritas c/ Polenta',24.99)">+</button></div>
 <div class="item"><span>Fritas c/ Calabresa e Catupiry</span><span>R$ 35,99</span><button class="btn-add" onclick="addToCart('Fritas c/ Calabresa e Catupiry',35.99)">+</button></div>
 <div class="item"><span>Fritas + Polenta + Chuleta + Anel de Cebola</span><span>R$ 49,99</span><button class="btn-add" onclick="addToCart('Combo Completo',49.99)">+</button></div>
+</div>
+
+<!-- BEBIDAS -->
+<div class="category-btn" onclick="toggle('bebidasBox')">🥤 Bebidas <span>▼</span></div>
+<div id="bebidasBox" class="content-box">
+<div class="item"><span>Cassulinha 200 ml</span><span>R$ 3,00</span><button class="btn-add" onclick="addToCart('Cassulinha 200 ml',3)">+</button></div>
+<div class="item"><span>Coca-Cola 600 ml</span><span>R$ 8,00</span><button class="btn-add" onclick="addToCart('Coca-Cola 600 ml',8)">+</button></div>
+<div class="item"><span>Coca-Cola 2 Litros</span><span>R$ 16,00</span><button class="btn-add" onclick="addToCart('Coca-Cola 2 Litros',16)">+</button></div>
+<div class="item"><span>Refri Lata</span><span>R$ 6,00</span><button class="btn-add" onclick="addToCart('Refri Lata',6)">+</button></div>
+<div class="item"><span>Refrigerante 2 Litros</span><span>R$ 12,00</span><button class="btn-add" onclick="addToCart('Refrigerante 2 Litros',12)">+</button></div>
+<div class="item"><span>Cerveja Lata 350 ml</span><span>R$ 6,00</span><button class="btn-add" onclick="addToCart('Cerveja Lata 350 ml',6)">+</button></div>
+<div class="item"><span>Achocolatado 200 ml</span><span>R$ 3,00</span><button class="btn-add" onclick="addToCart('Achocolatado 200 ml',3)">+</button></div>
 </div>
 
 </div>
