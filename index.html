@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Rabikas Burguer • Cardápio Premium</title>
+<title>Rabikas Burguer • Cardápio Digital</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -57,7 +57,7 @@ body{
     max-width:430px;
     margin:0 auto;
     min-height:100vh;
-    padding:20px 12px 140px;
+    padding:20px 12px 160px;
     text-align:center;
     display:none;
 }
@@ -74,7 +74,6 @@ body{
         2px 2px 0 #b37a00,
         3px 3px 10px rgba(0,0,0,.5);
 }
-
 .brand-sub{font-size:13px; opacity:.85; margin-bottom:20px;}
 
 /* CATEGORY BUTTON */
@@ -119,7 +118,6 @@ body{
     display:none;
     animation:fade .3s ease;
 }
-
 @keyframes fade{
     from{opacity:0; transform:translateY(-5px);}
     to{opacity:1; transform:translateY(0);}
@@ -135,7 +133,6 @@ body{
     gap:8px;
 }
 .item:last-child{border-bottom:none;}
-
 .item-name{flex:1; text-align:left; font-size:14px;}
 .item-price{width:85px; text-align:right; font-weight:bold; font-size:14px;}
 
@@ -309,7 +306,9 @@ body{
 </div>
 
 <script>
-let cart=[];
+let cart = [];
+let deliveryFee = 8.00;
+let isDelivery = false;
 
 function enterApp(){
     document.getElementById('splash').style.display='none';
@@ -317,64 +316,91 @@ function enterApp(){
 }
 
 function toggleBox(id){
-    let el=document.getElementById(id);
+    let el = document.getElementById(id);
     el.style.display = el.style.display === 'block' ? 'none' : 'block';
 }
 
-function addToCart(name,price){
-    cart.push({name,price});
+function addToCart(name, price){
+    cart.push({name, price});
     updateCart();
 }
 
-function removeFromCart(i){
-    cart.splice(i,1);
+function removeFromCart(index){
+    cart.splice(index, 1);
     updateCart();
 }
 
 function updateCart(){
-    let box=document.getElementById('cartItems');
-    box.innerHTML='';
-    let total=0;
+    let box = document.getElementById('cartItems');
+    box.innerHTML = '';
+    let total = 0;
 
-    cart.forEach((i,n)=>{
-        total+=i.price;
-        box.innerHTML+=`
+    cart.forEach((item, index) => {
+        total += item.price;
+        box.innerHTML += `
         <div class="cart-item">
-            <span>${i.name}</span>
-            <span>R$ ${i.price.toFixed(2).replace('.',',')}</span>
-            <button class="remove-btn" onclick="removeFromCart(${n})">X</button>
+            <span>${item.name}</span>
+            <span>R$ ${item.price.toFixed(2).replace('.', ',')}</span>
+            <button class="remove-btn" onclick="removeFromCart(${index})">X</button>
         </div>`;
     });
 
-    document.getElementById('totalValue').innerText='Total: R$ '+total.toFixed(2).replace('.',',');
+    if(isDelivery){
+        total += deliveryFee;
+        box.innerHTML += `
+        <div class="cart-item">
+            <strong>Taxa de Entrega</strong>
+            <strong>R$ ${deliveryFee.toFixed(2).replace('.', ',')}</strong>
+        </div>`;
+    }
+
+    document.getElementById('totalValue').innerText = 'Total: R$ ' + total.toFixed(2).replace('.', ',');
     document.getElementById('cartFooter').style.display = cart.length ? 'block' : 'none';
 }
 
 function finishOrder(){
-    let nome=prompt("Seu nome:");
+    if(cart.length === 0){
+        alert("Seu carrinho está vazio.");
+        return;
+    }
+
+    let nome = prompt("Digite seu nome:");
     if(!nome) return;
 
-    let entrega=confirm("Entrega? (OK = Entrega | Cancelar = Retirada)");
-    let endereco = entrega ? prompt("Digite o endereço de entrega:") : "Retirada no local";
-    if(entrega && !endereco) return;
+    let tipo = confirm("Clique em OK para ENTREGA ou Cancelar para RETIRADA NO LOCAL");
+    let endereco = "Retirada no local";
+    isDelivery = false;
 
-    let pagamento=prompt("Forma de pagamento? (Pix, Dinheiro, Cartão)");
+    if(tipo){
+        isDelivery = true;
+        endereco = prompt("Digite o endereço para entrega:");
+        if(!endereco) return;
+    }
+
+    let pagamento = prompt("Forma de pagamento? (Pix, Dinheiro, Cartão)");
     if(!pagamento) return;
 
-    let msg = `NOVO PEDIDO - RABIKAS BURGUER\n`;
-    msg += `Cliente: ${nome}\n`;
-    msg += entrega ? `Endereço: ${endereco}\n` : `Retirada no local\n`;
-    msg += `Pagamento: ${pagamento}\n\nItens:\n`;
+    let mensagem = `NOVO PEDIDO - RABIKAS BURGUER\n`;
+    mensagem += `Cliente: ${nome}\n`;
+    mensagem += isDelivery ? `Entrega\nEndereço: ${endereco}\n` : `Retirada no local\n`;
+    mensagem += `Pagamento: ${pagamento}\n\nItens:\n`;
 
-    let total=0;
-    cart.forEach(i=>{
-        msg += `- ${i.name} (R$ ${i.price.toFixed(2).replace('.',',')})\n`;
-        total += i.price;
+    let total = 0;
+    cart.forEach(item => {
+        mensagem += `- ${item.name} (R$ ${item.price.toFixed(2).replace('.', ',')})\n`;
+        total += item.price;
     });
 
-    msg += `\nTotal: R$ ${total.toFixed(2).replace('.',',')}`;
+    if(isDelivery){
+        mensagem += `- Taxa de Entrega (R$ ${deliveryFee.toFixed(2).replace('.', ',')})\n`;
+        total += deliveryFee;
+    }
 
-    window.open(`https://wa.me/554991789706?text=${encodeURIComponent(msg)}`, '_blank');
+    mensagem += `\nTotal: R$ ${total.toFixed(2).replace('.', ',')}`;
+
+    let telefone = "554991789706";
+    let url = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
+    window.open(url, '_blank');
 }
 </script>
 
