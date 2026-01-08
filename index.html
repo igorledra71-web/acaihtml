@@ -57,7 +57,7 @@ body{
     max-width:430px;
     margin:0 auto;
     min-height:100vh;
-    padding:20px 12px 160px;
+    padding:20px 12px 200px;
     text-align:center;
     display:none;
 }
@@ -158,7 +158,7 @@ body{
     background:#fff;
     color:#3b0047;
     border-top:4px solid #ffd34d;
-    padding:16px 12px;
+    padding:14px 12px 18px;
     border-radius:22px 22px 0 0;
     box-shadow:0 -6px 20px rgba(0,0,0,.4);
     display:none;
@@ -190,8 +190,22 @@ body{
     text-align:right;
 }
 
+.delivery-box{
+    margin:10px 0;
+    padding:10px;
+    border-radius:12px;
+    background:#f2f2f2;
+    font-size:14px;
+}
+
+.delivery-box label{
+    display:block;
+    margin-bottom:6px;
+    cursor:pointer;
+}
+
 .btn-finish{
-    margin-top:14px;
+    margin-top:10px;
     background:linear-gradient(135deg,#25D366,#1ebe57);
     color:#fff;
     padding:15px;
@@ -301,6 +315,18 @@ body{
 <!-- CARRINHO -->
 <div class="cart-footer" id="cartFooter">
     <div id="cartItems"></div>
+
+    <div class="delivery-box">
+        <label>
+            <input type="radio" name="entregaTipo" value="retirada" checked onchange="setDelivery(false)">
+            Retirada no local
+        </label>
+        <label>
+            <input type="radio" name="entregaTipo" value="entrega" onchange="setDelivery(true)">
+            Entrega (+ R$ 8,00)
+        </label>
+    </div>
+
     <div class="total" id="totalValue">Total: R$0,00</div>
     <div class="btn-finish" onclick="finishOrder()">Finalizar Pedido</div>
 </div>
@@ -309,6 +335,7 @@ body{
 let cart = [];
 let deliveryFee = 8.00;
 let isDelivery = false;
+let deliveryAddress = "";
 
 function enterApp(){
     document.getElementById('splash').style.display='none';
@@ -327,6 +354,22 @@ function addToCart(name, price){
 
 function removeFromCart(index){
     cart.splice(index, 1);
+    updateCart();
+}
+
+function setDelivery(value){
+    isDelivery = value;
+
+    if(isDelivery){
+        deliveryAddress = prompt("Digite o endereço para entrega:");
+        if(!deliveryAddress){
+            isDelivery = false;
+            document.querySelector('input[value="retirada"]').checked = true;
+        }
+    } else {
+        deliveryAddress = "";
+    }
+
     updateCart();
 }
 
@@ -367,22 +410,12 @@ function finishOrder(){
     let nome = prompt("Digite seu nome:");
     if(!nome) return;
 
-    let tipo = confirm("Clique em OK para ENTREGA ou Cancelar para RETIRADA NO LOCAL");
-    let endereco = "Retirada no local";
-    isDelivery = false;
-
-    if(tipo){
-        isDelivery = true;
-        endereco = prompt("Digite o endereço para entrega:");
-        if(!endereco) return;
-    }
-
     let pagamento = prompt("Forma de pagamento? (Pix, Dinheiro, Cartão)");
     if(!pagamento) return;
 
     let mensagem = `NOVO PEDIDO - RABIKAS BURGUER\n`;
     mensagem += `Cliente: ${nome}\n`;
-    mensagem += isDelivery ? `Entrega\nEndereço: ${endereco}\n` : `Retirada no local\n`;
+    mensagem += isDelivery ? `Entrega\nEndereço: ${deliveryAddress}\n` : `Retirada no local\n`;
     mensagem += `Pagamento: ${pagamento}\n\nItens:\n`;
 
     let total = 0;
