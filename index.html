@@ -322,13 +322,21 @@ body{
   <input class="input-field" id="clientAddress" placeholder="Endereço para entrega">
 </div>
 
-<select class="select-field" id="paymentMethod">
+<select class="select-field" id="paymentMethod" onchange="checkPayment()">
   <option value="">Forma de pagamento</option>
-  <option>Dinheiro</option>
-  <option>Pix</option>
-  <option>Cartão Débito</option>
-  <option>Cartão Crédito</option>
+  <option value="Dinheiro">Dinheiro</option>
+  <option value="Pix">Pix</option>
+  <option value="Cartão Débito">Cartão Débito</option>
+  <option value="Cartão Crédito">Cartão Crédito</option>
 </select>
+
+<div id="trocoBox" style="display:none;margin-top:8px;">
+    <div style="display:flex;gap:10px;">
+        <button type="button" class="btn-add" style="background:#FFD34D;color:#2b0033;flex:1;" onclick="setTroco(true)">Preciso de troco</button>
+        <button type="button" class="btn-add" style="background:#ccc;color:#2b0033;flex:1;" onclick="setTroco(false)">Não preciso</button>
+    </div>
+    <input class="input-field" id="trocoValue" placeholder="Troco para quanto? Ex: 50,00" style="display:none;">
+</div>
 
 <div class="total" id="totalValue">Total: R$ 0,00</div>
 <div class="btn-finish" onclick="finishOrder()">Finalizar Pedido</div>
@@ -337,6 +345,7 @@ body{
 <script>
 let cart = [];
 let isDelivery = false;
+let precisaTroco = false;
 
 function enterApp(){
   document.getElementById("splashScreen").style.display = "none";
@@ -399,27 +408,47 @@ function removeItem(index){
   updateCart();
 }
 
+function checkPayment(){
+    const payment = document.getElementById("paymentMethod").value;
+    const trocoBox = document.getElementById("trocoBox");
+
+    if(payment === "Dinheiro"){
+        trocoBox.style.display = "block";
+    }else{
+        trocoBox.style.display = "none";
+        document.getElementById("trocoValue").style.display = "none";
+        precisaTroco = false;
+    }
+}
+
+function setTroco(v){
+    precisaTroco = v;
+    const input = document.getElementById("trocoValue");
+    input.style.display = v ? "block" : "none";
+}
+
 function finishOrder(){
   const name = document.getElementById("clientName").value;
   const address = document.getElementById("clientAddress").value;
   const payment = document.getElementById("paymentMethod").value;
+  const trocoValor = document.getElementById("trocoValue").value;
 
-  if(!name){
-    alert("Informe seu nome");
-    return;
-  }
-  if(isDelivery && !address){
-    alert("Informe o endereço para entrega");
-    return;
-  }
-  if(!payment){
-    alert("Informe a forma de pagamento");
-    return;
-  }
+  if(!name){ alert("Informe seu nome"); return; }
+  if(isDelivery && !address){ alert("Informe o endereço"); return; }
+  if(!payment){ alert("Informe a forma de pagamento"); return; }
 
   let msg = "🍔 Pedido Rabika's Burguer\n\n";
   msg += "Cliente: " + name + "\n";
   msg += "Pagamento: " + payment + "\n";
+
+  if(payment === "Dinheiro"){
+      if(precisaTroco && trocoValor){
+          msg += "Precisa de troco para: R$ " + trocoValor + "\n";
+      }else{
+          msg += "Não precisa de troco\n";
+      }
+  }
+
   msg += isDelivery ? "Entrega\nEndereço: " + address + "\n\n" : "Retirada no local\n\n";
   msg += "Itens:\n";
 
